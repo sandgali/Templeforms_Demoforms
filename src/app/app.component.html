@@ -1,0 +1,53 @@
+<h1>Angular Form</h1>
+<form #form="ngForm" novalidate>
+<div class ="panel panel-primary">
+
+  <div class ="panel-heading">
+    Angular Forms
+  </div>
+
+  <div class="panel-body">
+
+    <div class="form-group">
+        <label for="firstName">FirstName</label>
+    <input class="form-control"  type="text" name="firstName" 
+        [ngModel]="model.firstName"
+    (ngModelChange)="firstToUpper($event)"  id="firstName"  placeholder="FirstName" required/>
+  </div>
+
+    <div class="form-group">
+    <label for="lastName">LastName</label>
+    <input class="form-control"  type="text" name="lastName" placeholder="LastName"  id="lastName" [(ngModel)]="model.lastName"/>
+    </div>
+
+    <div class="checkbox">
+      <label><input type="checkbox" name ="fullTime" [(ngModel)]="model.fullTime">FullTime</label>
+    </div>
+
+        <div class="radio">
+        <label><input type="radio" name="gender" valu="female" [(ngModel)]="model.gender">Female
+        </label>
+        </div>
+
+        <div class="radio">
+        <label><input type="radio" name="gender" valu="male" [(ngModel)]="model.gender">Male
+        </label>
+        </div>
+
+        <div class="form-group">
+          <label>code Lang</label>
+                     <select class="form-control" name="codeLang" [(ngModel)]="model.codeLang">
+              <option *ngFor="let lang of languages">{{lang}}</option>
+          </select>
+        </div>
+             
+    <button class ="btn btn-success" type="submit">Submit</button>
+  </div>
+
+</div>
+
+<h4>model:{{model|json}}</h4>
+<h4>Angular{{form.value|json}}</h4>
+
+</form>
+
