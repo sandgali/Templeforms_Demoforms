@@ -13,11 +13,15 @@ export class AppComponent{
  model= new Employee('sandya','gali',false,'female','Angular')
 
  firstToUpper(value:string):void{
-   if(value.length>0)
-   this.model.firstName=value.charAt(0).toUpperCase()+value.slice(1)
+   var v =value.trim()
+     if(value.length>0)
+   {
+   this.model.firstName=v.charAt(0).toUpperCase()
+     }
    else
+   {
    this.model.firstName=value
 
  }
     }
-  
+  }
