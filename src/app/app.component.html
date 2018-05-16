@@ -1,5 +1,5 @@
 <h1>Angular Form</h1>
-<form #form="ngForm" novalidate>
+<form #form="ngForm" novalidate (submit)="submitForm(form)">
 <div class ="panel panel-primary">
 
   <div class ="panel-heading">
@@ -8,17 +8,59 @@
 
   <div class="panel-body">
 
-    <div class="form-group">
-        <label for="firstName">FirstName</label>
+    <div class="form-group" [class.has-error]="firstName.invalid">
+        <label class="control-label" for="firstName">FirstName</label>
     <input class="form-control"  type="text" name="firstName" 
         [ngModel]="model.firstName"
-    (ngModelChange)="firstToUpper($event)"  id="firstName"  placeholder="FirstName" required/>
+    (ngModelChange)="firstToUpper($event)" 
+    #firstName="ngModel"
+     id="firstName"  placeholder="FirstName"  required/>
+     <div class="alert alert-danger" *ngIf="firstName.invalid">
+       FirstName is required
+     </div>
+     </div>
+     <h3>classes</h3>
+<h3>{{firstName.invalid}}</h3>
+
+     <div class="form-group" [class.has-error]="password.invalid">
+      <label class="control-label" for="password">Password</label>
+  <input class="form-control"  type="password" name="Password" 
+      [(ngModel)]="model.password"
+   #password ="ngModel"
+   id="password"  placeholder="password" maxlength="5" />
+   <div class="alert alert-danger" *ngIf="password.invalid">
+  max length is 5
+   </div>
   </div>
+
+  <div class="form-group" [class.has-error]="email.invalid">
+    <label class="control-label" for="email">Email</label>
+<input class="form-control"  type="email" name="email" 
+    [(ngModel)]="model.email"
+ #email ="ngModel"
+ id="email"  placeholder="email" pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" />
+ <div class="alert alert-danger" *ngIf="email.invalid">
+please enter valid email
+ </div>
+</div>
+
+<div class="form-group" [class.has-error]="phone.invalid">
+  <label class="control-label" for="phone">phone</label>
+<input class="form-control"  type="phone" name="phone" 
+  [(ngModel)]="model.phone"
+#phone ="ngModel"
+id="phone"  placeholder="phone" pattern="[0-9]{10}"  maxlength="10" />
+<div class="alert alert-danger" *ngIf="phone.invalid">
+please enter valid phonenumber
+</div>
+</div>
 
     <div class="form-group">
     <label for="lastName">LastName</label>
-    <input class="form-control"  type="text" name="lastName" placeholder="LastName"  id="lastName" [(ngModel)]="model.lastName"/>
-    </div>
+    <input class="form-control"  type="text" name="lastName" 
+    placeholder="LastName"  id="lastName"    #lastName [(ngModel)]="model.lastName" required/>
+      </div>
+      <h3>{{lastName.className}}</h3>
 
     <div class="checkbox">
       <label><input type="checkbox" name ="fullTime" [(ngModel)]="model.fullTime">FullTime</label>
@@ -34,20 +76,25 @@
         </label>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="hasCodeLangError">
           <label>code Lang</label>
-                     <select class="form-control" name="codeLang" [(ngModel)]="model.codeLang">
+                     <select class="form-control" name="codeLang"
+                      [(ngModel)]="model.codeLang" (blur)="validateCodeLang($event)">
+                      <option value="default">please select lang</option>
               <option *ngFor="let lang of languages">{{lang}}</option>
+             
           </select>
+
+          <div class="alert alert-danger" *ngIf="hasCodeLangError"> please select proper lang</div>
         </div>
              
-    <button class ="btn btn-success" type="submit">Submit</button>
+    <button class ="btn btn-success" type="submit" [disabled]="submitDisable">Submit</button>
   </div>
 
 </div>
 
 <h4>model:{{model|json}}</h4>
-<h4>Angular{{form.value|json}}</h4>
+<h4>Angular:{{form.value|json}}</h4>
 
 </form>
 
